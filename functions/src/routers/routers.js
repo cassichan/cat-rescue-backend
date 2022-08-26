@@ -8,7 +8,7 @@ export const getCats = (req, res) => {
       }
       const collection = client
         .db("animals")
-        .collection("cats");
+        .collection("real-cats");
       collection.find().toArray((err, result) => {
         if (err) res.status(500).send(err);
         if (result) res.json(result);
@@ -23,7 +23,18 @@ export const getCats = (req, res) => {
   //   const {favorite} = req.body;
   //   const collection = client
   //   .db("animals")
-  //   .collection("cats")
+  //   .collection("real-cats")
+  //   collection.findOneAndUpdate(_id, favorite)
+  // }
+
+
+  //Update favorite
+  // export const updateDog = (req, res) => {
+  //   const {_id} = req.params;
+  //   const {favorite} = req.body;
+  //   const collection = client
+  //   .db("animals")
+  //   .collection("real-dogs")
   //   collection.findOneAndUpdate(_id, favorite)
   // }
 
@@ -35,7 +46,7 @@ export const getCats = (req, res) => {
       }
       const collection = client
         .db("animals")
-        .collection("dogs");
+        .collection("real-dogs");
       collection.find().toArray((err, result) => {
         if (err) res.status(500).send(err);
         if (result) res.json(result);
@@ -53,7 +64,7 @@ export const getCats = (req, res) => {
       const newCat = req.body;
       const collection = client
         .db("animals")
-        .collection("cats");
+        .collection("real-cats");
       collection.insertOne(newCat, (err, result) => {
         if (err) res.status(500).send(err);
         if (result) res.json(result);
@@ -71,7 +82,7 @@ export const getCats = (req, res) => {
       const newDog = req.body;
       const collection = client
         .db("animals")
-        .collection("dogs");
+        .collection("real-dogs");
       collection.insertOne(newDog, (err, result) => {
         if (err) res.status(500).send(err);
         if (result) res.json(result);
@@ -79,3 +90,13 @@ export const getCats = (req, res) => {
       });
     });
   };
+
+export function deleteCat(req, res) {
+    const {_id} = req.params;
+    res.status(203).send("Cat has been deleted from system.")
+}
+
+export function deleteDog(req, res) {
+  const {_id} = req.params;
+  res.status(203).send("Dog has been deleted from system.")
+}
