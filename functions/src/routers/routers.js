@@ -4,17 +4,42 @@ import db from "../dbConnect/dbConnect.js";
 const cats = db.collection("real-cats");
 const dogs = db.collection("real-dogs");
 
+//Get all cats
+// export const getCats = async (req, res) => {
+//   const allCats = await cats
+//     .find()
+//     .toArray()
+//     .catch((err) => res.status(500).send(err));
+//   res.json(allCats);
+// };
+
+//Get only the cats at a rescue (that have rescue name)
 export const getCats = async (req, res) => {
+  const query = { rescue: { $exists: true } };
   const allCats = await cats
-    .find()
+    .find(query)
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allCats);
 };
 
+
+
+//Get all dogs
+// export const getDogs = async (req, res) => {
+//   const allDogs = await dogs
+//     .find()
+//     .toArray()
+//     .catch((err) => res.status(500).send(err));
+//   res.json(allDogs);
+// };
+
+
+//Get dogs at rescue/shelter (one with rescue name)
 export const getDogs = async (req, res) => {
+  const query = { rescue: { $exists: true } };
   const allDogs = await dogs
-    .find()
+    .find(query)
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allDogs);
