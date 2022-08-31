@@ -23,7 +23,14 @@ export const getCats = async (req, res) => {
   res.json(allCats);
 };
 
-
+export const getStrayCats = async (req, res) => {
+  const query = { rescue: { $exists: false } };
+  const strayCats = await cats
+    .find(query)
+    .toArray()
+    .catch((err) => res.status(500).send(err));
+  res.json(strayCats);
+};
 
 //Get all dogs
 // export const getDogs = async (req, res) => {
@@ -34,7 +41,6 @@ export const getCats = async (req, res) => {
 //   res.json(allDogs);
 // };
 
-
 //Get dogs at rescue/shelter (one with rescue name)
 export const getDogs = async (req, res) => {
   const query = { rescue: { $exists: true } };
@@ -43,6 +49,15 @@ export const getDogs = async (req, res) => {
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allDogs);
+};
+
+export const getStrayDogs = async (req, res) => {
+  const query = { rescue: { $exists: false } };
+  const strayDogs = await dogs
+    .find(query)
+    .toArray()
+    .catch((err) => res.status(500).send(err));
+  res.json(strayDogs);
 };
 
 export const addCat = async (req, res) => {
@@ -65,32 +80,33 @@ export const addDog = async (req, res) => {
   res.json(allDogs);
 };
 
-//Update favorite
-// export const updateCat = (req, res) => {
-//   const {_id} = req.params;
-//   const {favorite} = req.body;
-//   const collection = client
-//   .db("animals")
-//   .collection("real-cats")
-//   collection.findOneAndUpdate(_id, favorite)
+// export const updateCat = async (req, res) => {
+//   // const {_id} = req.params;
+//   // const {favorite} = req.body;
+//   await cats.findOneAndUpdate(req.query, {set: req.body})
+//   const updatedCat = await cats.find(req.query).toArray()
+//   res.json(updatedCat)
 // }
 
-//Update favorite
-// export const updateDog = (req, res) => {
-//   const {_id} = req.params;
-//   const {favorite} = req.body;
-//   const collection = client
-//   .db("animals")
-//   .collection("real-dogs")
-//   collection.findOneAndUpdate(_id, favorite)
+export const updateDog = async (req, res) => {
+  //   // const {_id} = req.params;
+  //   // const {favorite} = req.body;
+  // await dogs.findOneAndUpdate(req.query, {set: req.body})
+  await dogs.findOneAndUpdate(req.params, { $set: req.body });
+  const updatedDog = await dogs.find(req.query).toArray();
+  res.json(updatedDog);
+};
+
+// export function deleteCat(req, res) {
+//   // const { _id } = req.query;
+//   await cats.findOneAndDelete(req.query)
+//   const allTheCatsAfterDelete = await cats.find().toArray()
+//   res.json(allTheCatsAfterDelete);
 // }
 
-export function deleteCat(req, res) {
-  const { _id } = req.params;
-  res.status(203).send("Cat has been deleted from system.");
-}
-
-export function deleteDog(req, res) {
-  const { _id } = req.params;
-  res.status(203).send("Dog has been deleted from system.");
-}
+// export function deleteDog(req, res) {
+//   // const { _id } = req.query;
+//   await dogs.findOneAndDelete(req.query)
+//   const allTheDogsAfterDelete = await dogs.find().toArray()
+//   res.json(allTheDogsAfterDelete);
+// }
