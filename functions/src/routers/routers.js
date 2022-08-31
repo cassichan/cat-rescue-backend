@@ -23,6 +23,7 @@ export const getCats = async (req, res) => {
   res.json(allCats);
 };
 
+//Get cats without rescue name
 export const getStrayCats = async (req, res) => {
   const query = { rescue: { $exists: false } };
   const strayCats = await cats
@@ -51,6 +52,7 @@ export const getDogs = async (req, res) => {
   res.json(allDogs);
 };
 
+//Get dogs without a rescue name
 export const getStrayDogs = async (req, res) => {
   const query = { rescue: { $exists: false } };
   const strayDogs = await dogs
@@ -89,12 +91,9 @@ export const addDog = async (req, res) => {
 // }
 
 export const updateDog = async (req, res) => {
-  //   // const {_id} = req.params;
-  //   // const {favorite} = req.body;
-  // await dogs.findOneAndUpdate(req.query, {set: req.body})
-  await dogs.findOneAndUpdate(req.params, { $set: req.body });
+  await dogs.findOneAndUpdate(req.query, { $set: req.body });
   const updatedDog = await dogs.find(req.query).toArray();
-  res.json(updatedDog);
+  res.send(updatedDog);
 };
 
 // export function deleteCat(req, res) {

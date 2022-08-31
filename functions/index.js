@@ -23,7 +23,7 @@ app.post("/add-cat", addCat);
 app.get("/dogs", getDogs);
 app.get("/get-new-dog", getStrayDogs);
 app.post("/add-dog", addDog);
-app.patch("/dog/_id", updateDog);
+app.patch("/dog/:_id", updateDog);
 // app.patch("/cat/_id", updateCat)
 // app.delete("/remove-cat/_id", deleteCat)
 // app.delete("/remove-dog/_id", deleteDog)
