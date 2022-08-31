@@ -84,32 +84,31 @@ export const addDog = async (req, res) => {
 };
 
 export const updateCat = async (req, res) => {
-  console.log(req.query)
-  let id = new ObjectId(req.query._id)
-console.log(`This is the id after Objectid: ${id}`)
-  await cats.findOneAndUpdate({_id: id}, {$set: req.body});
+  console.log(req.query);
+  let id = new ObjectId(req.query._id);
+  console.log(`This is the id after Objectid: ${id}`);
+  await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
   res.json("Cat updated");
   // res.send(updatedDog);
 };
 
 export const updateDog = async (req, res) => {
-  console.log(req.query)
-  let id = new ObjectId(req.query._id)
-console.log(`This is the id after Objectid: ${id}`)
-  await dogs.findOneAndUpdate({_id: id}, {$set: req.body});
+  console.log(req.query);
+  let id = new ObjectId(req.query._id);
+  console.log(`This is the id after Objectid: ${id}`);
+  await dogs.findOneAndUpdate({ _id: id }, { $set: req.body });
   res.json("Dog updated");
   // res.send(updatedDog);
 };
 
 export const deleteCat = async (req, res) => {
-  let id = new ObjectId(req.query._id)
-  await cats.findOneAndDelete({_id: id}, {$set: req.body})
-  res.json("Cat deleted")
-}
+  let id = new ObjectId(req.query._id);
+  await cats.findOneAndDelete({ _id: id }, { $set: req.body });
+  res.json("Cat deleted");
+};
 
-// export function deleteDog(req, res) {
-//   // const { _id } = req.query;
-//   await dogs.findOneAndDelete(req.query)
-//   const allTheDogsAfterDelete = await dogs.find().toArray()
-//   res.json(allTheDogsAfterDelete);
-// }
+export const deleteDog = async (req, res) => {
+  let id = new ObjectId(req.query._id);
+  await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
+  res.json("Dog deleted");
+};
