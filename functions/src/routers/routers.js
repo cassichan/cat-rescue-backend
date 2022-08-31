@@ -1,4 +1,5 @@
 // import { client } from "../dbConnect/dbConnect.js";
+import { ObjectId } from "mongodb";
 import db from "../dbConnect/dbConnect.js";
 
 const cats = db.collection("real-cats");
@@ -91,9 +92,14 @@ export const addDog = async (req, res) => {
 // }
 
 export const updateDog = async (req, res) => {
-  await dogs.findOneAndUpdate(req.query, { $set: req.body });
-  const updatedDog = await dogs.find(req.query).toArray();
-  res.send(updatedDog);
+  console.log(req.query)
+  let id = new ObjectId(req.query._id)
+console.log(`This is the id after Objectid: ${id}`)
+  await dogs.findOneAndUpdate({_id: id}, {$set: req.body});
+  // const updatedDog = await dogs.findOne(id)
+  // .toArray();
+  res.json("Item updated");
+  // res.send(updatedDog);
 };
 
 // export function deleteCat(req, res) {

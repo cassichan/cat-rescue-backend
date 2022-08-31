@@ -19,12 +19,13 @@ app.use(cors());
 
 app.get("/cats", getCats);
 app.get("/get-new-cat", getStrayCats);
+// app.get("/get-one-cat")
 app.post("/add-cat", addCat);
 app.get("/dogs", getDogs);
 app.get("/get-new-dog", getStrayDogs);
 app.post("/add-dog", addDog);
-app.patch("/dog/:_id", updateDog);
 // app.patch("/cat/_id", updateCat)
+app.patch("/dog", updateDog);
 // app.delete("/remove-cat/_id", deleteCat)
 // app.delete("/remove-dog/_id", deleteDog)
 
