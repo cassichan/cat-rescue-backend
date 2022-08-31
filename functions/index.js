@@ -8,7 +8,8 @@ import {
   addDog,
   updateDog,
   updateCat,
-  //  ,deleteCat, deleteDog,
+   deleteCat,
+  //  deleteDog,
   getStrayCats,
   getStrayDogs,
 } from "./src/routers/routers.js";
@@ -27,7 +28,7 @@ app.get("/get-new-dog", getStrayDogs);
 app.post("/add-dog", addDog);
 app.patch("/cat", updateCat)
 app.patch("/dog", updateDog);
-// app.delete("/remove-cat/_id", deleteCat)
+app.delete("/remove-cat", deleteCat)
 // app.delete("/remove-dog/_id", deleteDog)
 
 export const api = functions.https.onRequest(app);
