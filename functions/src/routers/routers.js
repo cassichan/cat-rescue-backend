@@ -83,13 +83,16 @@ export const addDog = async (req, res) => {
   res.json(allDogs);
 };
 
-// export const updateCat = async (req, res) => {
-//   // const {_id} = req.params;
-//   // const {favorite} = req.body;
-//   await cats.findOneAndUpdate(req.query, {set: req.body})
-//   const updatedCat = await cats.find(req.query).toArray()
-//   res.json(updatedCat)
-// }
+export const updateCat = async (req, res) => {
+  console.log(req.query)
+  let id = new ObjectId(req.query._id)
+console.log(`This is the id after Objectid: ${id}`)
+  await cats.findOneAndUpdate({_id: id}, {$set: req.body});
+  // const updatedDog = await dogs.findOne(id)
+  // .toArray();
+  res.json("Cat updated");
+  // res.send(updatedDog);
+};
 
 export const updateDog = async (req, res) => {
   console.log(req.query)
@@ -98,7 +101,7 @@ console.log(`This is the id after Objectid: ${id}`)
   await dogs.findOneAndUpdate({_id: id}, {$set: req.body});
   // const updatedDog = await dogs.findOne(id)
   // .toArray();
-  res.json("Item updated");
+  res.json("Dog updated");
   // res.send(updatedDog);
 };
 
