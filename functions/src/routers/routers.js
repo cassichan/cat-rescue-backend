@@ -34,6 +34,27 @@ export const getStrayCats = async (req, res) => {
   res.json(strayCats);
 };
 
+//Get one cat
+export const getOneCat = async (req, res) => {
+  console.log(req.query);
+  let id = new ObjectId(req.query._id);
+  // console.log(`This is the id after Objectid: ${id}`);
+  // const oneCat = 
+  await cats
+    .findOne({ _id: id })
+    .toArray((thisCat) => {
+      res.json(thisCat);
+    })
+    .catch((err) => res.status(500).send(err));
+  // res.json(oneCat);
+
+  // .toArray()
+  // .catch((err) => res.status(500).send(err))
+  // res.json(oneCat);
+  // , { $set: req.body });
+  // res.send(updatedDog);
+};
+
 //Get all dogs
 // export const getDogs = async (req, res) => {
 //   const allDogs = await dogs

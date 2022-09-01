@@ -12,6 +12,7 @@ import {
   deleteDog,
   getStrayCats,
   getStrayDogs,
+  getOneCat
 } from "./src/routers/routers.js";
 
 const app = express();
@@ -21,7 +22,7 @@ app.use(cors());
 
 app.get("/cats", getCats);
 app.get("/get-new-cat", getStrayCats);
-// app.get("/get-one-cat")
+app.get("/cat/:_id", getOneCat)
 app.post("/add-cat", addCat);
 app.get("/dogs", getDogs);
 app.get("/get-new-dog", getStrayDogs);
