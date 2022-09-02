@@ -1,20 +1,12 @@
 // import { client } from "../dbConnect/dbConnect.js";
 import { ObjectId } from "mongodb";
 import db from "../dbConnect/dbConnect.js";
+// import { secretKey } from "../credentials.js";
 
 const cats = db.collection("real-cats");
 const dogs = db.collection("real-dogs");
 
-//Get all cats
-// export const getCats = async (req, res) => {
-//   const allCats = await cats
-//     .find()
-//     .toArray()
-//     .catch((err) => res.status(500).send(err));
-//   res.json(allCats);
-// };
-
-//Get only the cats at a rescue (that have rescue name)
+//Get only the cats at a rescue (ready for adoption)
 export const getCats = async (req, res) => {
   const query = { rescue: { $exists: true } };
   const allCats = await cats
@@ -24,7 +16,7 @@ export const getCats = async (req, res) => {
   res.json(allCats);
 };
 
-//Get cats without rescue name
+//Get cats without rescue name (not ready for adoption)
 export const getStrayCats = async (req, res) => {
   const query = { rescue: { $exists: false } };
   const strayCats = await cats
@@ -36,35 +28,22 @@ export const getStrayCats = async (req, res) => {
 
 //Get one cat
 export const getOneCat = async (req, res) => {
-  console.log(req.query);
+  // console.log(req.query);
+  // let id = new ObjectId(req.query._id);
   let id = new ObjectId(req.query._id);
   // console.log(`This is the id after Objectid: ${id}`);
-  // const oneCat = 
-  await cats
-    .findOne({ _id: id })
-    .toArray((thisCat) => {
-      res.json(thisCat);
-    })
+  let oneCat = await cats
+    // .findOne({ _id: id}, { $set: req.body })
+    .findOne({ _id: id });
+  // .toArray((thisCat) => {
+  //   res.json(thisCat);
+  res
+    .json(oneCat)
+    // })
     .catch((err) => res.status(500).send(err));
-  // res.json(oneCat);
-
-  // .toArray()
-  // .catch((err) => res.status(500).send(err))
-  // res.json(oneCat);
-  // , { $set: req.body });
-  // res.send(updatedDog);
 };
 
-//Get all dogs
-// export const getDogs = async (req, res) => {
-//   const allDogs = await dogs
-//     .find()
-//     .toArray()
-//     .catch((err) => res.status(500).send(err));
-//   res.json(allDogs);
-// };
-
-//Get dogs at rescue/shelter (one with rescue name)
+//Get dogs at rescue/shelter (ready for adoption)
 export const getDogs = async (req, res) => {
   const query = { rescue: { $exists: true } };
   const allDogs = await dogs
@@ -74,7 +53,7 @@ export const getDogs = async (req, res) => {
   res.json(allDogs);
 };
 
-//Get dogs without a rescue name
+//Get dogs without a rescue name (not yet ready for adoption)
 export const getStrayDogs = async (req, res) => {
   const query = { rescue: { $exists: false } };
   const strayDogs = await dogs
@@ -110,7 +89,6 @@ export const updateCat = async (req, res) => {
   console.log(`This is the id after Objectid: ${id}`);
   await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
   res.json("Cat updated");
-  // res.send(updatedDog);
 };
 
 export const updateDog = async (req, res) => {
@@ -119,7 +97,6 @@ export const updateDog = async (req, res) => {
   console.log(`This is the id after Objectid: ${id}`);
   await dogs.findOneAndUpdate({ _id: id }, { $set: req.body });
   res.json("Dog updated");
-  // res.send(updatedDog);
 };
 
 export const deleteCat = async (req, res) => {
@@ -133,3 +110,21 @@ export const deleteDog = async (req, res) => {
   await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
   res.json("Dog deleted");
 };
+
+//Get all cats
+// export const getCats = async (req, res) => {
+//   const allCats = await cats
+//     .find()
+//     .toArray()
+//     .catch((err) => res.status(500).send(err));
+//   res.json(allCats);
+// };
+
+//Get all dogs
+// export const getDogs = async (req, res) => {
+//   const allDogs = await dogs
+//     .find()
+//     .toArray()
+//     .catch((err) => res.status(500).send(err));
+//   res.json(allDogs);
+// };
