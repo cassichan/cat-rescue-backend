@@ -1,7 +1,8 @@
 // import { client } from "../dbConnect/dbConnect.js";
 import { ObjectId } from "mongodb";
 import db from "../dbConnect/dbConnect.js";
-// import { secretKey } from "../credentials.js";
+import { secretKey } from "../dbConnect/credentials.js";
+import jwt from "jsonwebtoken"
 
 const cats = db.collection("real-cats");
 const dogs = db.collection("real-dogs");
@@ -30,11 +31,11 @@ export const getStrayCats = async (req, res) => {
 export const getOneCat = async (req, res) => {
   // console.log(req.query);
   // let id = new ObjectId(req.query._id);
-  let id = new ObjectId(req.query._id);
+  // let id = new ObjectId(req.query._id);
   // console.log(`This is the id after Objectid: ${id}`);
   let oneCat = await cats
     // .findOne({ _id: id}, { $set: req.body })
-    .findOne({ _id: id });
+    .findOne({ _id: ObjectId });
   // .toArray((thisCat) => {
   //   res.json(thisCat);
   res
@@ -63,8 +64,16 @@ export const getStrayDogs = async (req, res) => {
   res.json(strayDogs);
 };
 
+//Add cat with auth
 export const addCat = async (req, res) => {
+  // const token = req.headers.authorization;
   const newCat = req.body;
+  // const user = jwt.verify(token, secretKey);
+  // if (!user) {
+  //   res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
+  //   return;
+  // }
+  // newCat.userId = user.id;
   await cats.insertOne(newCat);
   const allCats = await cats
     .find()
@@ -73,6 +82,7 @@ export const addCat = async (req, res) => {
   res.json(allCats);
 };
 
+//Add dog
 export const addDog = async (req, res) => {
   const newDog = req.body;
   await dogs.insertOne(newDog);
