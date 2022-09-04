@@ -35,13 +35,11 @@ export const getOneCat = async (req, res) => {
   // console.log(`This is the id after Objectid: ${id}`);
   let oneCat = await cats
     // .findOne({ _id: id}, { $set: req.body })
-    .findOne({ _id: ObjectId });
+    .findOne({ _id: ObjectId })
   // .toArray((thisCat) => {
   //   res.json(thisCat);
-  res
-    .json(oneCat)
-    // })
-    .catch((err) => res.status(500).send(err));
+  .catch((err) => res.status(500).send(err));
+  res.json(oneCat)
 };
 
 //Get dogs at rescue/shelter (ready for adoption)
