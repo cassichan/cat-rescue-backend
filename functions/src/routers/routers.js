@@ -1,8 +1,7 @@
-// import { client } from "../dbConnect/dbConnect.js";
 import { ObjectId } from "mongodb";
 import db from "../dbConnect/dbConnect.js";
 import { secretKey } from "../dbConnect/credentials.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const cats = db.collection("real-cats");
 const dogs = db.collection("real-dogs");
@@ -29,17 +28,20 @@ export const getStrayCats = async (req, res) => {
 
 //Get one cat
 export const getOneCat = async (req, res) => {
-  // console.log(req.query);
-  // let id = new ObjectId(req.query._id);
-  // let id = new ObjectId(req.query._id);
-  // console.log(`This is the id after Objectid: ${id}`);
+  let id = new ObjectId(req.params._id);
   let oneCat = await cats
-    // .findOne({ _id: id}, { $set: req.body })
-    .findOne({ _id: ObjectId })
-  // .toArray((thisCat) => {
-  //   res.json(thisCat);
-  .catch((err) => res.status(500).send(err));
-  res.json(oneCat)
+    .findOne({ _id: id })
+    .catch((err) => res.status(500).send(err));
+  res.json(oneCat);
+};
+
+// Get one dog
+export const getOneDog = async (req, res) => {
+  let id = new ObjectId(req.params._id);
+  let oneDog = await dogs
+    .findOne({ _id: id })
+    .catch((err) => res.status(500).send(err));
+  res.json(oneDog);
 };
 
 //Get dogs at rescue/shelter (ready for adoption)

@@ -12,7 +12,8 @@ import {
   deleteDog,
   getStrayCats,
   getStrayDogs,
-  getOneCat
+  getOneCat,
+  getOneDog,
 } from "./src/routers/routers.js";
 import { createUser, loginUser } from "./src/routers/users.js";
 
@@ -24,11 +25,8 @@ app.use(cors());
 app.get("/cats", getCats);
 app.get("/get-new-cat", getStrayCats);
 
-
-app.get("/cats/:_id", getOneCat)
-// app.get("/cats/:catId", getOneCat)
-
-
+app.get("/cats/:_id", getOneCat);
+app.get("/dogs/:_id", getOneDog);
 
 app.post("/add-cat", addCat);
 app.get("/dogs", getDogs);
@@ -39,7 +37,7 @@ app.patch("/dog", updateDog);
 app.delete("/remove-cat", deleteCat);
 app.delete("/remove-dog", deleteDog);
 
-app.post('/users', createUser);
-app.post('/users/login', loginUser);
+app.post("/users", createUser);
+app.post("/users/login", loginUser);
 
 export const api = functions.https.onRequest(app);
