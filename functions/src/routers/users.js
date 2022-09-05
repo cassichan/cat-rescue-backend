@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
-// import dbConnect from "../dbConnect/dbConnect.js"
-// import { secretKey } from "../credentials.js";
+import db from "../dbConnect/dbConnect.js"
+import { secretKey } from "../dbConnect/credentials.js";
 
 export async function createUser(req, res) {
   let { email, password } = req.body; // LOWERCASE
   email = email.toLowerCase();
-  const db = dbConnect();
+  // const db = dbConnect();
   const user = await db.collection('animals').add({ email, password })
     .catch(err => res.status(500).send(err));
   const token = jwt.sign({ email, id: user.id }, secretKey);
@@ -15,7 +15,7 @@ export async function createUser(req, res) {
 export async function loginUser(req, res) {
   let { email, password } = req.body; // LOWERCASE
   email = email.toLowerCase();
-  const db = dbConnect();
+  // const db = dbConnect();
   const collection = await db.collection('animals')
     .where('email', '==', email)
     .where('password', '==', password)

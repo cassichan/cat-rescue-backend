@@ -66,14 +66,14 @@ export const getStrayDogs = async (req, res) => {
 
 //Add cat with auth
 export const addCat = async (req, res) => {
-  // const token = req.headers.authorization;
+  const token = req.headers.authorization;
   const newCat = req.body;
-  // const user = jwt.verify(token, secretKey);
-  // if (!user) {
-  //   res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
-  //   return;
-  // }
-  // newCat.userId = user.id;
+  const user = jwt.verify(token, secretKey);
+  if (!user) {
+    res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
+    return;
+  }
+  newCat.userId = user.id;
   await cats.insertOne(newCat);
   const allCats = await cats
     .find()
@@ -82,7 +82,7 @@ export const addCat = async (req, res) => {
   res.json(allCats);
 };
 
-//Add dog
+//Add dog. will add auth
 export const addDog = async (req, res) => {
   const newDog = req.body;
   await dogs.insertOne(newDog);
@@ -93,6 +93,7 @@ export const addDog = async (req, res) => {
   res.json(allDogs);
 };
 
+//Update cat. will add auth
 export const updateCat = async (req, res) => {
   console.log(req.query);
   let id = new ObjectId(req.query._id);
@@ -101,6 +102,7 @@ export const updateCat = async (req, res) => {
   res.json("Cat updated");
 };
 
+//Update cat. will add auth
 export const updateDog = async (req, res) => {
   console.log(req.query);
   let id = new ObjectId(req.query._id);
@@ -109,12 +111,14 @@ export const updateDog = async (req, res) => {
   res.json("Dog updated");
 };
 
+//Delete cat. will add auth
 export const deleteCat = async (req, res) => {
   let id = new ObjectId(req.query._id);
   await cats.findOneAndDelete({ _id: id }, { $set: req.body });
   res.json("Cat deleted");
 };
 
+//Delete dog. will add auth
 export const deleteDog = async (req, res) => {
   let id = new ObjectId(req.query._id);
   await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
