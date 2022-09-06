@@ -66,14 +66,14 @@ export const getStrayDogs = async (req, res) => {
 
 //Add cat with auth
 export const addCat = async (req, res) => {
-  const token = req.headers.authorization;
+  // const token = req.headers.authorization;
   const newCat = req.body;
-  const user = jwt.verify(token, secretKey);
-  if (!user) {
-    res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
-    return;
-  }
-  newCat.userId = user.id;
+  // const user = jwt.verify(token, secretKey);
+  // if (!user) {
+  //   res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
+  //   return;
+  // }
+  // newCat.userId = user.id;
   await cats.insertOne(newCat);
   const allCats = await cats
     .find()
