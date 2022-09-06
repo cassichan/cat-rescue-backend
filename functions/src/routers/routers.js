@@ -97,8 +97,9 @@ export const addDog = async (req, res) => {
 export const updateCat = async (req, res) => {
   console.log(req.query);
   let id = new ObjectId(req.query._id);
-  console.log(`This is the id after Objectid: ${id}`);
+  console.log(`This is the id after Objectid: ${id}`); //gets id
   await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
+  console.log(cats) //cat is {}
   res.json("Cat updated");
 };
 
