@@ -15,7 +15,7 @@ import {
   getOneCat,
   getOneDog,
 } from "./src/routers/routers.js";
-// import { createUser, loginUser } from "./src/routers/users.js";
+import { createUser, loginUser } from "./src/routers/users.js";
 
 const app = express();
 
@@ -37,7 +37,7 @@ app.patch("/update-dog", updateDog);
 app.delete("/remove-cat", deleteCat);
 app.delete("/remove-dog", deleteDog);
 
-// app.post("/users", createUser);
-// app.post("/users/login", loginUser);
+app.post("/users", createUser);
+app.post("/users/login", loginUser);
 
 export const api = functions.https.onRequest(app);
