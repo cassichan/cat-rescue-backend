@@ -26,6 +26,7 @@ export async function loginUser(req, res) {
   if (user) {
     const token = jwt.sign({ email: user.email, id: user.id }, secretKey);
     res.send({ token });
+    console.log(token)
   } else {
     res.status(401).send("Wrong username and password")
   }

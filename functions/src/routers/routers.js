@@ -69,10 +69,7 @@ export const addCat = async (req, res) => {
   // const token = req.headers.authorization;
   const newCat = req.body;
   // const user = jwt.verify(token, secretKey);
-  // if (!user) {
-  //   res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
-  //   return;
-  // }
+  // if (user) {
   // newCat.userId = user.id;
   await cats.insertOne(newCat);
   const allCats = await cats
@@ -80,6 +77,14 @@ export const addCat = async (req, res) => {
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allCats);
+  // } else {
+  //   res
+  //     .status(400)
+  //     .send({
+  //       success: false,
+  //       message: "You must login to post a new animal.",
+  //     });
+  // }
 };
 
 //Add dog. will add auth
@@ -95,12 +100,23 @@ export const addDog = async (req, res) => {
 
 //Update cat. will add auth
 export const updateCat = async (req, res) => {
+  // const token = req.headers.authorization;
   console.log(req.query);
+
   let id = new ObjectId(req.query._id);
-  console.log(`This is the id after Objectid: ${id}`);
-  await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
-  console.log(cats);
-  res.json("Cat updated");
+  // const user = jwt.verify(token, secretKey);
+  // if (!user) {
+  //   res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
+  //   return;
+  // }
+  // newCat.userId = user.id;
+  // if (user) {
+    // console.log(`This is the id after Objectid: ${id}`);
+    await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
+    res.json("Cat updated");
+  // } else {
+  //   res.status(400).send("Not authorized");
+  // }
 };
 
 //Update cat. will add auth
@@ -125,21 +141,3 @@ export const deleteDog = async (req, res) => {
   await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
   res.json("Dog deleted");
 };
-
-//Get all cats
-// export const getCats = async (req, res) => {
-//   const allCats = await cats
-//     .find()
-//     .toArray()
-//     .catch((err) => res.status(500).send(err));
-//   res.json(allCats);
-// };
-
-//Get all dogs
-// export const getDogs = async (req, res) => {
-//   const allDogs = await dogs
-//     .find()
-//     .toArray()
-//     .catch((err) => res.status(500).send(err));
-//   res.json(allDogs);
-// };
