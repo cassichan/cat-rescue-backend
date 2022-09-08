@@ -69,23 +69,33 @@ export const addCat = async (req, res) => {
   // const token = req.headers.authorization;
   const newCat = req.body;
   // const user = jwt.verify(token, secretKey);
+  // console.log(user);
+  // if (!newCat || !newCat.cat || !user) {
+  //   res.status(400).send({
+  //     success: false,
+  //     message: "You must login to post a new animal.",
+  //   });
+  //   return;
+  // } else {
   // if (user) {
   // newCat.userId = user.id;
+  // const db = dbConnect();
   await cats.insertOne(newCat);
   const allCats = await cats
     .find()
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allCats);
-  // } else {
-  //   res
-  //     .status(400)
-  //     .send({
-  //       success: false,
-  //       message: "You must login to post a new animal.",
-  //     });
-  // }
 };
+// } else {
+//   res
+//     .status(400)
+//     .send({
+//       success: false,
+//       message: "You must login to post a new animal.",
+//     });
+// }
+// };
 
 //Add dog. will add auth
 export const addDog = async (req, res) => {
@@ -102,24 +112,28 @@ export const addDog = async (req, res) => {
 export const updateCat = async (req, res) => {
   // const token = req.headers.authorization;
   console.log(req.query);
-
   let id = new ObjectId(req.query._id);
   // const user = jwt.verify(token, secretKey);
+  // console.log(user)
   // if (!user) {
-  //   res.status(400).send({ success: false, message: 'You must login to post a new animal.' });
+  //   res
+  //     .status(400)
+  //     .send({
+  //       success: false,
+  //       message: "You must login to post a new animal.",
+  //     });
   //   return;
   // }
   // newCat.userId = user.id;
   // if (user) {
-    // console.log(`This is the id after Objectid: ${id}`);
     await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
     res.json("Cat updated");
   // } else {
-  //   res.status(400).send("Not authorized");
-  // }
-};
+    res.status(400).send("Not authorized");
+  }
+// };
 
-//Update cat. will add auth
+//Update dog
 export const updateDog = async (req, res) => {
   console.log(req.query);
   let id = new ObjectId(req.query._id);
@@ -128,14 +142,14 @@ export const updateDog = async (req, res) => {
   res.json("Dog updated");
 };
 
-//Delete cat. will add auth
+//Delete cat
 export const deleteCat = async (req, res) => {
   let id = new ObjectId(req.query._id);
   await cats.findOneAndDelete({ _id: id }, { $set: req.body });
   res.json("Cat deleted");
 };
 
-//Delete dog. will add auth
+//Delete dog
 export const deleteDog = async (req, res) => {
   let id = new ObjectId(req.query._id);
   await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
