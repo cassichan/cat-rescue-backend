@@ -68,6 +68,7 @@ export const getStrayDogs = async (req, res) => {
 export const addCat = async (req, res) => {
   // const token = req.headers.authorization;
   const newCat = req.body;
+  const query = { rescue: { $exists: false } };
   // const user = jwt.verify(token, secretKey);
   // console.log(user);
   // if (!newCat || !newCat.cat || !user) {
@@ -82,10 +83,11 @@ export const addCat = async (req, res) => {
   // const db = dbConnect();
   await cats.insertOne(newCat);
   const allCats = await cats
-    .find()
+    .find(query)
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allCats);
+  // console.log(allCats)
 };
 // } else {
 //   res
@@ -100,9 +102,10 @@ export const addCat = async (req, res) => {
 //Add dog. will add auth
 export const addDog = async (req, res) => {
   const newDog = req.body;
+  const query = { rescue: { $exists: false } };
   await dogs.insertOne(newDog);
   const allDogs = await dogs
-    .find()
+    .find(query)
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allDogs);

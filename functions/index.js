@@ -23,14 +23,14 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/cats", getCats);
-app.get("/get-new-cat", getStrayCats);
+app.get("/get-stray-cats", getStrayCats);
 
 app.get("/cats/:_id", getOneCat);
 app.get("/dogs/:_id", getOneDog);
 
 app.post("/add-cat", addCat);
 app.get("/dogs", getDogs);
-app.get("/get-new-dog", getStrayDogs);
+app.get("/get-stray-dogs", getStrayDogs);
 app.post("/add-dog", addDog);
 app.patch("/update-cat", updateCat);
 app.patch("/update-dog", updateDog);
