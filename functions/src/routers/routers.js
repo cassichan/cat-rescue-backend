@@ -64,42 +64,19 @@ export const getStrayDogs = async (req, res) => {
   res.json(strayDogs);
 };
 
-//Add cat with auth
+//Add cat
 export const addCat = async (req, res) => {
-  // const token = req.headers.authorization;
   const newCat = req.body;
   const query = { rescue: { $exists: false } };
-  // const user = jwt.verify(token, secretKey);
-  // console.log(user);
-  // if (!newCat || !newCat.cat || !user) {
-  //   res.status(400).send({
-  //     success: false,
-  //     message: "You must login to post a new animal.",
-  //   });
-  //   return;
-  // } else {
-  // if (user) {
-  // newCat.userId = user.id;
-  // const db = dbConnect();
   await cats.insertOne(newCat);
   const allCats = await cats
     .find(query)
     .toArray()
     .catch((err) => res.status(500).send(err));
   res.json(allCats);
-  // console.log(allCats)
 };
-// } else {
-//   res
-//     .status(400)
-//     .send({
-//       success: false,
-//       message: "You must login to post a new animal.",
-//     });
-// }
-// };
 
-//Add dog. will add auth
+//Add dog
 export const addDog = async (req, res) => {
   const newDog = req.body;
   const query = { rescue: { $exists: false } };
@@ -111,30 +88,14 @@ export const addDog = async (req, res) => {
   res.json(allDogs);
 };
 
-//Update cat. will add auth
+//Update cat
 export const updateCat = async (req, res) => {
-  // const token = req.headers.authorization;
   console.log(req.query);
   let id = new ObjectId(req.query._id);
-  // const user = jwt.verify(token, secretKey);
-  // console.log(user)
-  // if (!user) {
-  //   res
-  //     .status(400)
-  //     .send({
-  //       success: false,
-  //       message: "You must login to post a new animal.",
-  //     });
-  //   return;
-  // }
-  // newCat.userId = user.id;
-  // if (user) {
-    await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
-    res.json("Cat updated");
-  // } else {
-    res.status(400).send("Not authorized");
-  }
-// };
+  await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
+  res.json("Cat updated");
+  res.status(400).send("Not authorized");
+};
 
 //Update dog
 export const updateDog = async (req, res) => {
