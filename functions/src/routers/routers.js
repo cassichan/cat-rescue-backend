@@ -1,7 +1,5 @@
 import { ObjectId } from "mongodb";
 import db from "../dbConnect/dbConnect.js";
-import { secretKey } from "../dbConnect/credentials.js";
-import jwt from "jsonwebtoken";
 
 const cats = db.collection("real-cats");
 const dogs = db.collection("real-dogs");
