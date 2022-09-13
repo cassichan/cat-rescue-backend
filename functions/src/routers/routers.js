@@ -104,16 +104,16 @@ export const updateDog = async (req, res) => {
   res.json("Dog updated");
 };
 
-//Delete cat
-export const deleteCat = async (req, res) => {
-  let id = new ObjectId(req.query._id);
-  await cats.findOneAndDelete({ _id: id }, { $set: req.body });
-  res.json("Cat deleted");
-};
+// //Delete cat
+// export const deleteCat = async (req, res) => {
+//   let id = new ObjectId(req.query._id);
+//   await cats.findOneAndDelete({ _id: id }, { $set: req.body });
+//   res.json("Cat deleted");
+// };
 
-//Delete dog
-export const deleteDog = async (req, res) => {
-  let id = new ObjectId(req.query._id);
-  await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
-  res.json("Dog deleted");
-};
+// //Delete dog
+// export const deleteDog = async (req, res) => {
+//   let id = new ObjectId(req.query._id);
+//   await dogs.findOneAndDelete({ _id: id }, { $set: req.body });
+//   res.json("Dog deleted");
+// };

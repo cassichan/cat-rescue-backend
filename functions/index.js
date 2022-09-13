@@ -8,8 +8,8 @@ import {
   addDog,
   updateDog,
   updateCat,
-  deleteCat,
-  deleteDog,
+  // deleteCat,
+  // deleteDog,
   getStrayCats,
   getStrayDogs,
   getOneCat,
@@ -34,8 +34,8 @@ app.get("/get-stray-dogs", getStrayDogs);
 app.post("/add-dog", addDog);
 app.patch("/update-cat", updateCat);
 app.patch("/update-dog", updateDog);
-app.delete("/remove-cat", deleteCat);
-app.delete("/remove-dog", deleteDog);
+// app.delete("/remove-cat", deleteCat);
+// app.delete("/remove-dog", deleteDog);
 
 app.post("/users", createUser);
 app.post("/users/login", loginUser);
