@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import db from "../dbConnect/dbConnect.js";
-// import jwt from "jsonwebtoken"
-// import { secretKey } from "../dbConnect/credentials.js";
+import jwt from "jsonwebtoken";
+import { secretKey } from "../dbConnect/credentials.js";
 
 const cats = db.collection("real-cats");
 const dogs = db.collection("real-dogs");
@@ -90,17 +90,13 @@ export const addDog = async (req, res) => {
 
 //Update cat
 export const updateCat = async (req, res) => {
-  // const token = req.headers.authorization;
-  // const user = jwt.verify(token, secretKey)
-  // console.log(req.query);
-  // if (!user) {
-  //   res.status(400).send({success: false, message: "Not authorized"});
-  // return;
-  // }
-  //  if (!token) {
-  //   res.status(400).send({success: false, message: "Not authorized"});
-  // return;
-  // }
+  const token = req.headers.authorization;
+  const user = jwt.verify(token, secretKey)
+  console.log(req.query);
+  if (!user) {
+    res.status(400).send({ success: false, message: "Not authorized" });
+    return;
+  }
   let id = new ObjectId(req.query._id);
   await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
   res.json("Cat updated");
@@ -108,12 +104,12 @@ export const updateCat = async (req, res) => {
 
 //Update dog
 export const updateDog = async (req, res) => {
-  // const token = req.headers.authorization;
-  // const user = jwt.verify(token, secretKey)
+  const token = req.headers.authorization;
+  const user = jwt.verify(token, secretKey);
   // console.log(req.query);
-  // if (!user) {
-  //   res.status(400).send("Not authorized");
-  // }
+  if (!user) {
+    res.status(400).send("Not authorized");
+  }
   console.log(req.query);
   let id = new ObjectId(req.query._id);
   console.log(`This is the id after Objectid: ${id}`);
