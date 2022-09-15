@@ -1,13 +1,15 @@
 import jwt from "jsonwebtoken";
 import db from "../dbConnect/dbConnect.js";
 import { secretKey } from "../dbConnect/credentials.js";
+import crypto from "crypto"
 
 export async function createUser(req, res) {
   let { email, password } = req.body;
   email = email.toLowerCase();
+  let encryptedPassword = crypto.createHash("md5").update(password).digest("hex")
   const user = await db
     .collection("users")
-    .insertOne({ email, password })
+    .insertOne({ email, password : encryptedPassword })
     .catch((err) => res.status(500).send(err));
   const token = jwt.sign({ email, id: user.id }, secretKey);
   res.send({ token });
@@ -16,9 +18,10 @@ export async function createUser(req, res) {
 export async function loginUser(req, res) {
   let { email, password } = req.body;
   email = email.toLowerCase();
+  let encryptedPassword = crypto.createHash("md5").update(password).digest("hex")
   const user = await db
     .collection("users")
-    .find({ email: email, password: password })
+    .find({ email: email, password: encryptedPassword })
     .toArray();
 
   if (user) {
