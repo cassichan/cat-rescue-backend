@@ -15,7 +15,9 @@ import {
   getOneCat,
   getOneDog,
 } from "./src/routers/routers.js";
-import { createUser, loginUser } from "./src/routers/users.js";
+import { createUser, loginUser, 
+  updateFavoriteList 
+} from "./src/routers/users.js";
 
 const app = express();
 
@@ -39,5 +41,6 @@ app.patch("/update-dog", updateDog);
 
 app.post("/users", createUser);
 app.post("/users/login", loginUser);
+app.patch("/users/favorites", updateFavoriteList)
 
 export const api = functions.https.onRequest(app);
