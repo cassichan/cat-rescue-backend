@@ -48,10 +48,9 @@ export async function updateFavoriteList(req, res) {
   try {
     const validToken = jwt.verify(token, secretKey);
     let id = new ObjectId(validToken.id);
-    const user = await db.collection("users").findOne({_id: id});
+    const user = await db.collection("users").findOne({ _id: id });
     // console.log(user)
-    
   } catch (err) {
-    console.log('err', err);
+    res.status(500).send(err);
   }
 }
