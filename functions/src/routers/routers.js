@@ -92,16 +92,15 @@ export const addDog = async (req, res) => {
 export const updateCat = async (req, res) => {
   const token = req.headers.authorization;
   const user = jwt.verify(token, secretKey);
-  if (!user || !token) {
+  if (!user 
+    // || !token
+    ){
     res.status(400).send({ success: false, message: "Not authorized" });
     return;
   }
-  if(!token) {
-    res.alert("Please login to favorite")
-  }
   let id = new ObjectId(req.query._id);
   await cats.findOneAndUpdate({ _id: id }, { $set: req.body });
-  res.json("Cat updated");
+  res.json("Cat updated" + id);
 };
 
 //Update dog
